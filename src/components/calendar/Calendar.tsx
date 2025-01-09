@@ -6,140 +6,41 @@ import Button from "../ui/Button"
 import { ITask } from "../../types/task"
 import { useCalendar } from "./useCalendar"
 import Input from "../ui/Input"
-import { useState, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useDebounce } from "../../hooks/useDebounce"
+import { useTasks } from "../../hooks/useTasks"
+import { formatDate } from "../../utils/date.helpers"
 
 const localizer = momentLocalizer(moment)
-
 const DnDCalendar = withDragAndDrop<ITask>(Calendar)
 
-const holidays = [
-  {
-    date: "2025-01-07",
-    localName: "عيد الميلاد المجيد",
-    name: "Christmas",
-    countryCode: "EG",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-08",
-    localName: "Božić",
-    name: "Orthodox Christmas Day",
-    countryCode: "ME",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Optional"],
-  },
-  {
-    date: "2025-01-09",
-    localName: "Martyr's Day",
-    name: "Martyr's Day",
-    countryCode: "PA",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-10",
-    localName: "Traditional Day",
-    name: "Traditional Day",
-    countryCode: "BJ",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-10",
-    localName: "Majority Rule Day",
-    name: "Majority Rule Day",
-    countryCode: "BS",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-11",
-    localName: "Takdim watikat al-istiqlal",
-    name: "Proclamation of Independence",
-    countryCode: "MA",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-13",
-    localName: "成人の日",
-    name: "Coming of Age Day",
-    countryCode: "JP",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-13",
-    localName: "Natalicio de Eugenio María de Hostos",
-    name: "Birthday of Eugenio María de Hostos",
-    countryCode: "PR",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-14",
-    localName: "Id Yennayer",
-    name: "Amazigh New Year",
-    countryCode: "MA",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-14",
-    localName: "Revolution and Youth Day",
-    name: "Revolution and Youth Day",
-    countryCode: "TN",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Public"],
-  },
-  {
-    date: "2025-01-14",
-    localName: "Día de la Divina Pastora",
-    name: "Feast of the Divina Pastora",
-    countryCode: "VE",
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ["Observance"],
-  },
-]
+// const holidays = [
+//   {
+//     date: "2025-01-07",
+//     localName: "عيد الميلاد المجيد",
+//     name: "Christmas",
+//     countryCode: "EG",
+//     fixed: false,
+//     global: true,
+//     counties: null,
+//     launchYear: null,
+//     types: ["Public"],
+//   },
+//   {
+//     date: "2025-01-08",
+//     localName: "Božić",
+//     name: "Orthodox Christmas Day",
+//     countryCode: "ME",
+//     fixed: false,
+//     global: true,
+//     counties: null,
+//     launchYear: null,
+//     types: ["Optional"],
+//   },
+// ]
 
 const MyCalendar = () => {
   const {
-    tasks,
     selectedTaskId,
     handleTaskDelete,
     getTaskStyle,
@@ -149,15 +50,25 @@ const MyCalendar = () => {
     handleTaskSave,
   } = useCalendar()
 
+  const [currentDate, setCurrentDate] = useState(formatDate(moment().startOf("month")))
   const [search, setSearch] = useState("")
-  const debouncedSearch = useDebounce(search, 300)
+  const debouncedSearch = useDebounce(search, 700)
 
-  useEffect(() => {
-    console.log("MyCalendar  search:", debouncedSearch)
-  }, [debouncedSearch])
+  const { tasks, isLoading, error } = useTasks({
+    startDate: currentDate,
+    endDate: formatDate(moment(currentDate).endOf("month")),
+    name: debouncedSearch,
+  })
+
+  const handleMonthChange = useCallback((newDate: Date) => {
+    setCurrentDate(formatDate(moment(newDate).startOf("month")))
+  }, [])
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading tasks</div>
 
   return (
-    <div className="h-full">
+    <div className="h-full flex flex-col">
       <div className="flex justify-between items-center mb-3">
         <Input
           placeholder="Search"
@@ -170,33 +81,23 @@ const MyCalendar = () => {
         </Button>
       </div>
 
-      <DnDCalendar
-        localizer={localizer}
-        events={tasks}
-        onEventDrop={moveTask}
-        startAccessor="start"
-        endAccessor="end"
-        titleAccessor="name"
-        views={["month", "week", "day"]}
-        defaultView="month"
-        onSelectEvent={(task) => openTaskPopUp(task.id, false)}
-        eventPropGetter={getTaskStyle}
-        popup={true}
-        dayPropGetter={(date) => {
-          const holiday = holidays.find(
-            (holiday) => moment(date).format("YYYY-MM-DD") === holiday.date
-          )
-
-          if (holiday) {
-            return {
-              className: holiday.name ? "bg-yellow-200" : "",
-              title: holiday.name,
-            }
-          }
-
-          return {}
-        }}
-      />
+      <div className="flex-grow">
+        <DnDCalendar
+          localizer={localizer}
+          events={tasks}
+          onEventDrop={moveTask}
+          startAccessor="date"
+          endAccessor="date"
+          titleAccessor="name"
+          views={["month", "week", "day"]}
+          defaultView="month"
+          onSelectEvent={(task) => openTaskPopUp(task.id, false)}
+          eventPropGetter={getTaskStyle}
+          popup={true}
+          onNavigate={handleMonthChange}
+          defaultDate={currentDate}
+        />
+      </div>
 
       {selectedTaskId && (
         <TaskPopUp

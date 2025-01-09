@@ -1,21 +1,29 @@
 import { useState } from "react"
-import {
-  formatDateToDatetimeLocal,
-  parseDatetimeLocalToDate,
-} from "../../../utils/dateUtils"
 import { ITask } from "../../../types/task"
+import moment from "moment"
 
 type TaskPopUpProps = {
   task: ITask
   onSave: (updatedTask: ITask) => void
 }
 
+const validateDate = (date: string) => {
+  const now = moment()
+  const eventDate = moment(date)
+
+  if (eventDate.isBefore(now, "day")) {
+    return "The date cannot be in the past."
+  }
+
+  return ""
+}
+
 const useTaskForm = ({ task, onSave }: TaskPopUpProps) => {
+  console.log("useTaskForm  task:", task)
   const [formData, setFormData] = useState({
     name: task.name || "",
     notes: task.notes || "",
-    start: formatDateToDatetimeLocal(task.start),
-    end: formatDateToDatetimeLocal(task.end),
+    date: task.date,
     color: task.color || "#000000",
   })
   const [error, setError] = useState("")
@@ -28,24 +36,11 @@ const useTaskForm = ({ task, onSave }: TaskPopUpProps) => {
     }))
   }
 
-  const validateDates = (start: Date, end: Date) => {
-    const now = new Date()
-    if (start < now || end < now) {
-      return "Dates cannot be in the past."
-    }
-    if (start >= end) {
-      return "Start date and time must be before end date and time."
-    }
-    return ""
-  }
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const { start, end } = formData
-    const startDate = parseDatetimeLocalToDate(start)
-    const endDate = parseDatetimeLocalToDate(end)
+    const { date } = formData
 
-    const errorMessage = validateDates(startDate, endDate)
+    const errorMessage = validateDate(date)
     if (errorMessage) {
       setError(errorMessage)
       return
@@ -56,8 +51,6 @@ const useTaskForm = ({ task, onSave }: TaskPopUpProps) => {
     const updatedTask = {
       ...task,
       ...formData,
-      start: startDate,
-      end: endDate,
     }
 
     onSave(updatedTask)

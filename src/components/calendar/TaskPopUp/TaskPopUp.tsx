@@ -4,13 +4,13 @@ import FormField from "../../ui/FormField"
 import Button from "../../ui/Button"
 import useTaskForm from "./useTaskForm"
 import { ITask } from "../../../types/task"
+import moment from "moment"
 
 const emptyTask: ITask = {
   id: "",
   name: "",
   notes: "",
-  start: new Date(),
-  end: new Date(),
+  date: moment(new Date()).format("YYYY-MM-DD"),
   color: "#000000",
 }
 
@@ -49,18 +49,10 @@ const TaskPopUp: FC<TaskPopUpProps> = ({ tasks, taskId, onClose, onDelete, onSav
           onChange={handleChange}
         />
         <FormField
-          label="Start Date & Time"
-          type="datetime-local"
-          name="start"
-          value={formData.start}
-          onChange={handleChange}
-          required
-        />
-        <FormField
-          label="End Date & Time"
-          type="datetime-local"
-          name="end"
-          value={formData.end}
+          label="Date"
+          type="date"
+          name="date"
+          value={formData.date}
           onChange={handleChange}
           required
         />

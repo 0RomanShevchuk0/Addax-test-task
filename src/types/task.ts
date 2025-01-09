@@ -1,8 +1,17 @@
+import { PaginationParamsType } from "./pagination"
+
 export interface ITask {
   id: string
   name: string
-  start: Date
-  end: Date
+  date: string
   notes?: string
-	color?: string
+  color?: string
 }
+
+export type TaskFormStateType = Partial<Omit<ITask, "id">>
+
+export type TasksQueryParamsType = {
+  name?: string
+  startDate?: string
+  endDate?: string
+} & PaginationParamsType

@@ -3,7 +3,7 @@ import Input from "./Input"
 
 interface FormFieldProps {
   label: string
-  type: "text" | "password" | "email" | "datetime-local" | "color"
+  type: "text" | "password" | "email" | "date" | "color"
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   required?: boolean

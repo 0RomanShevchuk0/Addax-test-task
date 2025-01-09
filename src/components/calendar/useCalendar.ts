@@ -1,10 +1,9 @@
+import { formatDate } from "./../../utils/date.helpers"
 import { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop"
-import { initialTasks } from "../../mockData"
 import { ITask } from "../../types/task"
 import { useState } from "react"
 
 type UseCalendarReturnType = {
-  tasks: ITask[]
   selectedTaskId: string | null
   openTaskPopUp: (id: string | null, isNew?: boolean) => void
   closeTaskPopup: () => void
@@ -15,18 +14,18 @@ type UseCalendarReturnType = {
 }
 
 export const useCalendar = (): UseCalendarReturnType => {
-  const [tasks, setTasks] = useState<ITask[]>(initialTasks)
+  // const [tasks, setTasks] = useState<ITask[]>(initialTasks)
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 
-  const _addTask = (task: ITask) => {
-    setTasks((prev) => [...prev, task])
-  }
-  const _updateTask = (updatedTask: ITask) => {
-    setTasks((prev) => prev.map((task) => (task.id === updatedTask.id ? updatedTask : task)))
-  }
-  const _deleteTask = (id: string) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id))
-  }
+  // const _addTask = (task: ITask) => {
+  //   setTasks((prev) => [...prev, task])
+  // }
+  // const _updateTask = (updatedTask: ITask) => {
+  //   setTasks((prev) => prev.map((task) => (task.id === updatedTask.id ? updatedTask : task)))
+  // }
+  // const _deleteTask = (id: string) => {
+  //   setTasks((prev) => prev.filter((task) => task.id !== id))
+  // }
 
   const openTaskPopUp = (id: string | null, isNew?: boolean) => {
     setSelectedTaskId(isNew ? crypto.randomUUID() : id)
@@ -40,27 +39,26 @@ export const useCalendar = (): UseCalendarReturnType => {
     const isNewTask = !task.id
 
     if (isNewTask) {
-      _addTask(task)
+      // _addTask(task)
     } else {
-      _updateTask(task)
+      // _updateTask(task)
     }
 
     closeTaskPopup()
   }
 
   const handleTaskDelete = (id: string) => {
-    _deleteTask(id)
+    // _deleteTask(id)
     closeTaskPopup()
   }
 
-  const moveTask = ({ event: task, start, end }: EventInteractionArgs<ITask>) => {
+  const moveTask = ({ event: task, start }: EventInteractionArgs<ITask>) => {
     const updatedTask: ITask = {
       ...task,
-      start: new Date(start),
-      end: new Date(end),
+      date: formatDate(start),
     }
 
-    _updateTask(updatedTask)
+    // _updateTask(updatedTask)
   }
 
   const getTaskStyle = (task: ITask) => ({
@@ -75,7 +73,6 @@ export const useCalendar = (): UseCalendarReturnType => {
     getTaskStyle,
     openTaskPopUp,
     closeTaskPopup,
-    tasks,
     handleTaskDelete,
     moveTask,
     handleTaskSave,
