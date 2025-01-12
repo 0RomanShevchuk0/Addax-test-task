@@ -19,13 +19,12 @@ const TaskPopUp: FC<TaskPopUpProps> = ({ taskId, closePopUp }) => {
       {error.message || "An error occurred while fetching the task."}
     </p>
   )
-  const renderTaskForm = !isLoading && task && <TaskForm task={task} closePopUp={closePopUp} />
 
   return (
     <PopUp onClose={closePopUp}>
       <div className="flex flex-col gap-3">
         <h2 className="text-xl font-bold mb-4">{isNewTask ? "Create Event" : "Edit Event"}</h2>
-        {isLoading ? renderLoading : renderTaskForm}
+        {isLoading ? renderLoading : <TaskForm task={task} closePopUp={closePopUp} />}
         {renderError}
       </div>
     </PopUp>
