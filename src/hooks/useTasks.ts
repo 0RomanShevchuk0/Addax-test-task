@@ -12,3 +12,12 @@ export function useTasks(params: TasksQueryParamsType) {
   })
   return { tasks: data || [], isLoading, error }
 }
+
+export function useSingleTask(taskId: string, enabled: boolean) {
+  const { data, isLoading, error } = useQuery({
+		queryKey: [taskId],
+    queryFn: () => taskService.getTaskById(taskId),
+    enabled: enabled,
+  })
+  return { data: data?.data, isLoading, error }
+}

@@ -1,0 +1,2 @@
+export const newTaskId = "new"
+

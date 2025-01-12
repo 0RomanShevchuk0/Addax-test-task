@@ -1,24 +1,45 @@
-import { ITask, TaskFormStateType } from "./../types/task"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { TaskFormStateType } from "./../types/task"
 import { taskService } from "../services/tasks.service"
 
-export const useCreateTask = (task: TaskFormStateType) => {
-  const { data, isPending, error } = useMutation({
-    mutationFn: () => taskService.createTask(task),
+export const useCreateTask = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (task: TaskFormStateType) => taskService.createTask(task),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] })
+    },
+    onError: (error) => {
+      console.error("Error creating task:", error)
+    },
   })
-  return { data, isPending, error }
 }
 
-export const useUpdateTask = (task: ITask) => {
-  const { data, isPending, error } = useMutation({
-    mutationFn: () => taskService.updateTask(task),
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, task }: { id: string; task: TaskFormStateType }) =>
+      taskService.updateTask(id, task),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] })
+    },
+    onError: (error) => {
+      console.error("Error updating task:", error)
+    },
   })
-  return { data, isPending, error }
 }
 
-export const useDeleteTask = (id: string) => {
-  const { data, isPending, error } = useMutation({
-    mutationFn: () => taskService.deleteTask(id),
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id: string) => taskService.deleteTask(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] })
+    },
+    onError: (error) => {
+      console.error("Error deleting task:", error)
+    },
   })
-  return { data, isPending, error }
 }

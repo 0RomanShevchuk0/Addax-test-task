@@ -6,7 +6,7 @@ export const Route = createRootRoute({
   component: () => (
     <div className="h-screen flex bg-red-400">
       <Sidebar />
-      <div className="flex flex-col flex-grow overflow-hidden h-full bg-gray-100">
+      <div className="flex flex-col flex-grow overflow-hidden h-full bg-gray-50">
         <Header />
         <div className="p-6 flex-grow overflow-auto">
           <Outlet />

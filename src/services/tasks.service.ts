@@ -16,7 +16,7 @@ class TaskService {
   }
 
   async getTaskById(id: string) {
-    const response = await axiosClassic.get(`this.baseURL/${id}`)
+    const response = await axiosClassic.get<ITask>(`${this.BASE_URL}/${id}`)
     return response
   }
 
@@ -25,13 +25,13 @@ class TaskService {
     return response
   }
 
-  async updateTask(task: ITask) {
-    const response = await axiosClassic.patch(this.BASE_URL, task)
+  async updateTask(id: string, task: TaskFormStateType) {
+    const response = await axiosClassic.patch(`${this.BASE_URL}/${id}`, task)
     return response
   }
 
   async deleteTask(id: string) {
-    const response = await axiosClassic.delete(`this.baseURL/${id}`)
+    const response = await axiosClassic.delete(`${this.BASE_URL}/${id}`)
     return response
   }
 }

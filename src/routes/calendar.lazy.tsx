@@ -1,12 +1,12 @@
 import { FC } from "react"
 import { createLazyFileRoute } from "@tanstack/react-router"
-import MyCalendar from "../components/calendar/Calendar"
 import "react-big-calendar/lib/css/react-big-calendar.css"
+import CalendarPage from "../pages/СalendarPage"
 
 const Calendar: FC = () => {
   return (
     <div className="h-full">
-      <MyCalendar />
+      <CalendarPage />
     </div>
   )
 }
