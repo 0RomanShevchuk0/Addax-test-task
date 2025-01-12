@@ -1,38 +1,62 @@
 import moment from "moment"
 import { FC } from "react"
-import { ITask } from "../../../types/task"
+import { ITask, TaskFormStateType } from "../../../types/task"
+import { useDrop } from "react-dnd"
+import DraggableTask from "./DraggableTask"
+import { useUpdateTask } from "../../../hooks/useTaskMutations"
+import { formatDate } from "../../../utils/date.helpers"
 
 type MonthDayCellsProps = {
   momentDay: moment.Moment
   dayTasks: ITask[]
-  styleConditions: { isToday: boolean; isLastRow: boolean; isLastCol: boolean }
+  holidayName: string
+  styleConditions: {
+    isToday: boolean
+    isLastRow: boolean
+    isLastCol: boolean
+    isCurrentMonth: boolean
+  }
   openTaskPopUp: (taskId: string | null) => void
+  onDrop: (task: ITask, date: string) => void
 }
 
 const MonthDayCell: FC<MonthDayCellsProps> = ({
   momentDay,
   dayTasks,
+  holidayName,
   styleConditions,
   openTaskPopUp,
+  onDrop: onDrop,
 }) => {
-  const { isToday, isLastCol, isLastRow } = styleConditions
+  const { isToday, isLastCol, isLastRow, isCurrentMonth } = styleConditions
+
+  const [, drop] = useDrop({
+    accept: "TASK",
+    drop: ({ task }: { task: ITask }) => onDrop(task, formatDate(momentDay)),
+  })
 
   const TasksElements = dayTasks.map((t) => (
-    <div
-      key={t.id}
-      className="bg-blue-500 text-white text-xs rounded-md px-2 py-1 truncate flex-shrink-0 hover:cursor-pointer"
-      style={{ background: t.color }}
-      onClick={() => openTaskPopUp(t.id)}
-    >
-      {t.name}
-    </div>
+    <DraggableTask key={t.id} task={t} openTaskPopUp={openTaskPopUp} />
   ))
 
   return (
     <div
-      className={`overflow-y-auto flex flex-col gap-1 p-2 border-gray-200 border-t border-l ${isToday ? "bg-white" : "bg-gray-100 -mr-[1px]"} ${isLastRow ? "border-b" : ""} ${isLastCol ? "border-r" : ""}`}
+      ref={drop}
+      className={`flex flex-col gap-1 p-2 border-gray-200 border-t border-l ${isCurrentMonth ? "bg-white" : "bg-gray-100"} ${isLastRow ? "border-b" : ""} ${isLastCol ? "border-r" : ""} overflow-y-auto`}
     >
-      <div className="self-end ext-sm font-medium">{momentDay.date()}</div>
+      <div className="w-full flex justify-between items-center">
+        {holidayName && (
+          <span className="text-xs text-gray-900 bg-gray-100 px-2 py-1 rounded-md font-light shadow-sm">
+            {holidayName}
+          </span>
+        )}
+        <span
+          className={`ml-auto text-sm font-medium ${isToday ? "text-white bg-red-500 px-2 py-1 rounded-full" : "text-gray-700"}`}
+        >
+          {momentDay.date()}
+        </span>
+      </div>
+
       <div className="flex flex-col gap-1 overflow-y-auto flex-grow">{TasksElements}</div>
     </div>
   )
