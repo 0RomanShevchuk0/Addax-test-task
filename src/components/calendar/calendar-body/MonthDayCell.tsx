@@ -1,10 +1,10 @@
 import moment from "moment"
 import { FC } from "react"
-import { ITask, TaskFormStateType } from "../../../types/task"
+import { ITask } from "../../../types/task"
 import { useDrop } from "react-dnd"
 import DraggableTask from "./DraggableTask"
-import { useUpdateTask } from "../../../hooks/useTaskMutations"
 import { formatDate } from "../../../utils/date.helpers"
+import { taskDnDKey } from "../../../constants/calendar.constants"
 
 type MonthDayCellsProps = {
   momentDay: moment.Moment
@@ -31,7 +31,7 @@ const MonthDayCell: FC<MonthDayCellsProps> = ({
   const { isToday, isLastCol, isLastRow, isCurrentMonth } = styleConditions
 
   const [, drop] = useDrop({
-    accept: "TASK",
+    accept: taskDnDKey,
     drop: ({ task }: { task: ITask }) => onDrop(task, formatDate(momentDay)),
   })
 

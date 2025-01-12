@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { type ITask } from "../../../types/task"
 import WeekDayHeader from "./WeekDayHeader"
 import MonthDayCell from "./MonthDayCell"
@@ -20,6 +20,10 @@ type CalendarProps = {
 const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) => {
   const [localTasks, setLocalTasks] = useState<ITask[]>(tasks)
 
+  useEffect(() => {
+    setLocalTasks(tasks)
+  }, [tasks])
+
   const weekDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   const monthDays = getMonthDays(currentDate)
 
@@ -30,7 +34,7 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
   const holidays = data?.data
 
   const updateTaskMutation = useUpdateTask()
-  const handleDrop = async (originalTask: ITask, date: string) => {
+  const moveTask = async (originalTask: ITask, date: string) => {
     const updatedTask = { ...originalTask, date }
     setLocalTasks((prev) => [...prev.filter((t) => t.id !== originalTask.id), updatedTask])
 
@@ -65,7 +69,7 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
         holidayName={dayHoliday?.name}
         styleConditions={{ isToday, isLastCol, isLastRow, isCurrentMonth }}
         openTaskPopUp={openTaskPopUp}
-        onDrop={handleDrop}
+        onDrop={moveTask}
       />
     )
   })

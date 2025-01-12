@@ -15,7 +15,7 @@ export function useTasks(params: TasksQueryParamsType) {
 
 export function useSingleTask(taskId: string, enabled: boolean) {
   const { data, isLoading, error } = useQuery({
-		queryKey: [taskId],
+    queryKey: [taskId],
     queryFn: () => taskService.getTaskById(taskId),
     enabled: enabled,
   })

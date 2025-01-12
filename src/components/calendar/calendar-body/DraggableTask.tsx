@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { ITask } from "../../../types/task"
 import { useDrag } from "react-dnd"
+import { taskDnDKey } from "../../../constants/calendar.constants"
 
 type DraggableTaskProps = {
   task: ITask
@@ -9,7 +10,7 @@ type DraggableTaskProps = {
 
 const DraggableTask: FC<DraggableTaskProps> = ({ task, openTaskPopUp }) => {
   const [, drag] = useDrag({
-    type: "TASK",
+    type: taskDnDKey,
     item: { task },
   })
 
