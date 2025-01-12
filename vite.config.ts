@@ -3,6 +3,6 @@ import viteReact from "@vitejs/plugin-react"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 
 export default defineConfig({
-	base: '/addax-test-task/',
+	base: '/',
   plugins: [TanStackRouterVite(), viteReact()],
 })

@@ -3,7 +3,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
 
-const basepath = "/addax-test-task"
+const basepath = "/"
 
 const router = createRouter({ routeTree, basepath })
 
