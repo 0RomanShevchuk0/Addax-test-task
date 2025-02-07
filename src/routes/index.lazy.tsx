@@ -1,5 +1,6 @@
 import { FC } from "react"
 import { createLazyFileRoute } from "@tanstack/react-router"
+import { appRoutes } from "../configs/routes.config"
 
 const Index: FC = () => {
   return (
@@ -9,6 +10,6 @@ const Index: FC = () => {
   )
 }
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createLazyFileRoute(appRoutes.home)({
   component: Index,
 })

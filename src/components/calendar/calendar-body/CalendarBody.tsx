@@ -27,11 +27,11 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
   const weekDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   const monthDays = getMonthDays(currentDate)
 
-  const { data, isLoading } = useQuery({
+  const { data: holidaysResponse, isLoading } = useQuery({
     queryKey: ["holidays"],
     queryFn: () => axios.get("https://date.nager.at/api/v3/NextPublicHolidays/US"),
   })
-  const holidays = data?.data
+  const holidays = holidaysResponse?.data
 
   const updateTaskMutation = useUpdateTask()
   const moveTask = async (originalTask: ITask, date: string) => {

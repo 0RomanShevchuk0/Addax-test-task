@@ -23,7 +23,9 @@ const CalendarPage = () => {
   })
 
   if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error loading tasks</div>
+  if (error) {
+    console.log("Error loading tasks")
+  }
 
   return (
     <div className="h-full flex flex-col gap-3">

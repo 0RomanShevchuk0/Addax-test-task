@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import { FC } from "react"
 import { UseFormRegisterReturn, FieldError } from "react-hook-form"
 
@@ -12,7 +13,10 @@ const FormField: FC<FormFieldProps> = ({ label, type, error, register }) => (
   <div className="flex flex-col items-start gap-1">
     <label className="text-gray-700 mb-1">{label}</label>
     <input
-      className="border-b border-gray-300 px-0 focus:border-black outline-none w-full"
+      className={clsx(
+        "border-b border-gray-300 px-0 focus:border-black outline-none w-full",
+        error && "border-red-500"
+      )}
       type={type}
       {...register}
     />

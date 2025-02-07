@@ -9,7 +9,9 @@ export function useTasks(params: TasksQueryParamsType) {
     queryKey: ["tasks", params.startDate, params.endDate, params.name],
     queryFn: () =>
       fetchAllTasks((p: PaginationParamsType) => taskService.getTasks({ ...params, ...p })),
+    retry: false,
   })
+
   return { tasks: data || [], isLoading, error }
 }
 

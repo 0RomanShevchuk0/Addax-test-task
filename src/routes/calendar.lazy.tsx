@@ -1,16 +1,12 @@
-import { FC } from "react"
 import { createLazyFileRoute } from "@tanstack/react-router"
-import "react-big-calendar/lib/css/react-big-calendar.css"
 import CalendarPage from "../pages/СalendarPage"
+import ProtectedRoute from "../hoc/ProtectedRoute"
+import { appRoutes } from "../configs/routes.config"
 
-const Calendar: FC = () => {
-  return (
-    <div className="h-full">
+export const Route = createLazyFileRoute(appRoutes.calendar)({
+  component: () => (
+    <ProtectedRoute protectedFrom="unauthorized">
       <CalendarPage />
-    </div>
-  )
-}
-
-export const Route = createLazyFileRoute("/calendar")({
-  component: Calendar,
+    </ProtectedRoute>
+  ),
 })

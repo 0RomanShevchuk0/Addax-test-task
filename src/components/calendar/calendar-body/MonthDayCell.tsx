@@ -51,7 +51,7 @@ const MonthDayCell: FC<MonthDayCellsProps> = ({
           </span>
         )}
         <span
-          className={`ml-auto text-sm font-medium ${isToday ? "text-white bg-red-500 px-2 py-1 rounded-full" : "text-gray-700"}`}
+          className={`ml-auto text-sm font-medium px-2 py-0.5 rounded-full ${isToday ? "text-white bg-red-500" : "text-gray-700"}`}
         >
           {momentDay.date()}
         </span>

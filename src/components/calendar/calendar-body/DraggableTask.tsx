@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { ITask } from "../../../types/task"
 import { useDrag } from "react-dnd"
-import { taskDnDKey } from "../../../constants/calendar.constants"
+import { defaultTaskColor, taskDnDKey } from "../../../constants/calendar.constants"
 
 type DraggableTaskProps = {
   task: ITask
@@ -17,8 +17,8 @@ const DraggableTask: FC<DraggableTaskProps> = ({ task, openTaskPopUp }) => {
   return (
     <div
       ref={drag}
-      className="bg-blue-500 text-white text-xs rounded-md px-2 py-1 truncate flex-shrink-0 hover:cursor-pointer"
-      style={{ background: task.color }}
+      className="text-white text-xs rounded-md px-2 py-1 truncate flex-shrink-0 hover:cursor-pointer"
+      style={{ background: task.color || defaultTaskColor }}
       onClick={() => openTaskPopUp(task.id)}
     >
       {task.name}
