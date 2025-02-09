@@ -1,15 +1,14 @@
 import { FC, useEffect, useState } from "react"
-import { type ITask } from "../../../types/task"
-import WeekDayHeader from "./WeekDayHeader"
+import { type ITask } from "@/types/task"
+import WeekDayHeader from "@/components/calendar/calendar-body/WeekDayHeader"
 import MonthDayCell from "./MonthDayCell"
-import { formatDate } from "../../../utils/date.helpers"
-import { getMonthDays } from "../../../utils/calendar.helpers"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+import { formatDate } from "@/utils/date.helpers"
+import { getMonthDays } from "@/utils/calendar.helpers"
 import moment from "moment"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { DndProvider } from "react-dnd"
-import { useUpdateTask } from "../../../hooks/useTaskMutations"
+import { useUpdateTask } from "@/hooks/useTaskMutations"
+import { useHolidays } from "@/hooks/useHolidays"
 
 type CalendarProps = {
   currentDate: string
@@ -27,11 +26,7 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
   const weekDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   const monthDays = getMonthDays(currentDate)
 
-  const { data: holidaysResponse, isLoading } = useQuery({
-    queryKey: ["holidays"],
-    queryFn: () => axios.get("https://date.nager.at/api/v3/NextPublicHolidays/US"),
-  })
-  const holidays = holidaysResponse?.data
+  const { holidays, isLoading } = useHolidays()
 
   const updateTaskMutation = useUpdateTask()
   const moveTask = async (originalTask: ITask, date: string) => {

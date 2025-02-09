@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { newTaskId } from "../../constants/calendar.constants"
+import { newTaskId } from "@/constants/calendar.constants"
 
 export type useCalendarPopUpReturnType = {
   selectedTaskId: string | null

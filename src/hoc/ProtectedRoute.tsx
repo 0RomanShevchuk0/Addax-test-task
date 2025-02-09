@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Navigate, ReactNode } from "@tanstack/react-router"
-import { useUser } from "../hooks/useUser"
-import { appRoutes } from "../configs/routes.config"
+import { useUser } from "@/hooks/useUser"
+import { appRoutes } from "@/configs/routes.config"
 
 type ProtectedRoutePropsType = {
   children: ReactNode
@@ -14,7 +14,7 @@ const ProtectedRoute: FC<ProtectedRoutePropsType> = ({ children, protectedFrom }
   if (isLoading) return <p>Loading...</p>
 
   if (protectedFrom === "unauthorized" && !user) {
-    return <Navigate to={appRoutes.login} />
+    return <Navigate to={appRoutes.auth} />
   }
 
   if (protectedFrom === "authorized" && user) {

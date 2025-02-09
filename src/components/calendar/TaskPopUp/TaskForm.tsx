@@ -1,11 +1,11 @@
 import { FC } from "react"
-import FormField from "../../ui/FormField"
-import Button from "../../ui/Button"
+import FormField from "@/components/ui/FormField"
+import Button from "@/components/ui/Button"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { ITask, TaskFormStateType } from "../../../types/task"
+import { ITask, TaskFormStateType } from "@/types/task"
 import moment from "moment"
-import { useCreateTask, useUpdateTask, useDeleteTask } from "../../../hooks/useTaskMutations"
-import { defaultTaskColor } from "../../../constants/calendar.constants"
+import { useCreateTask, useUpdateTask, useDeleteTask } from "@/hooks/useTaskMutations"
+import { defaultTaskColor } from "@/constants/calendar.constants"
 
 type TaskFormProps = {
   task?: ITask

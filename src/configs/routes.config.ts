@@ -1,5 +1,6 @@
 export const appRoutes = {
   home: "/",
-  login: "/login",
+  auth: "/auth",
   calendar: "/calendar",
+  settings: "/settings",
 } as const

@@ -1,7 +1,7 @@
 import { type Dispatch, type FC } from "react"
-import Button from "../ui/Button"
+import Button from "@/components/ui/Button"
 import moment from "moment"
-import { formatDate } from "../../utils/date.helpers"
+import { formatDate } from "@/utils/date.helpers"
 
 type CalendarHeaderProps = {
   currentDate: string

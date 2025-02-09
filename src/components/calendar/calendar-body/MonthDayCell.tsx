@@ -1,10 +1,10 @@
 import moment from "moment"
 import { FC } from "react"
-import { ITask } from "../../../types/task"
+import { ITask } from "@/types/task"
 import { useDrop } from "react-dnd"
-import DraggableTask from "./DraggableTask"
-import { formatDate } from "../../../utils/date.helpers"
-import { taskDnDKey } from "../../../constants/calendar.constants"
+import DraggableTask from "@/components/calendar/calendar-body/DraggableTask"
+import { formatDate } from "@/utils/date.helpers"
+import { taskDnDKey } from "@/constants/calendar.constants"
 
 type MonthDayCellsProps = {
   momentDay: moment.Moment

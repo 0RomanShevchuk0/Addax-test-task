@@ -1,13 +1,14 @@
 import { FC } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useMutation } from "@tanstack/react-query"
-import { IAuthForm } from "../../types/auth"
-import { authService } from "../../services/auth.service"
-import FormField from "../ui/FormField"
-import Button from "../ui/Button"
-import { EMAIL_REGEX } from "../../constants/validation"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { IAuthForm } from "@/types/auth"
+import { authService } from "@/services/auth.service"
+import FormField from "@/components/ui/FormField"
+import Button from "@/components/ui/Button"
+import { EMAIL_REGEX } from "@/constants/validation"
 import { useNavigate } from "@tanstack/react-router"
-import { appRoutes } from "../../configs/routes.config"
+import { appRoutes } from "@/configs/routes.config"
+import { appQueries } from "@/configs/querues.config"
 
 const LoginForm: FC = () => {
   const {
@@ -19,11 +20,13 @@ const LoginForm: FC = () => {
   const navigate = useNavigate()
   const loginMutation = useMutation({ mutationFn: authService.login })
 
+  const queryClient = useQueryClient()
+
   const onSubmit: SubmitHandler<IAuthForm> = (data) => {
-    console.log("onSubmit  data:", data)
     loginMutation.mutate(data, {
       onSuccess: (response) => {
         console.log("Login success:", response)
+        queryClient.invalidateQueries({ queryKey: [appQueries.user] })
         navigate({ to: appRoutes.home })
       },
       onError: (error) => {
@@ -52,7 +55,7 @@ const LoginForm: FC = () => {
         register={register("password", { required: true })}
         error={errors.password}
       />
-      <Button>Submit</Button>
+      <Button disabled={loginMutation.isPending}>Submit</Button>
     </form>
   )
 }

@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router"
 import { FC } from "react"
+import { appRoutes } from "@/configs/routes.config"
 
 const Sidebar: FC = () => {
   const links = [
-    { path: "/", label: "Home" },
-    { path: "/calendar", label: "Calendar" },
+    { path: appRoutes.home, label: "Home" },
+    { path: appRoutes.calendar, label: "Calendar" },
+    { path: appRoutes.settings, label: "Settings" },
   ]
 
   const LinkElements = links.map(({ path, label }) => (

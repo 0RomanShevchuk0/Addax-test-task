@@ -1,7 +1,7 @@
 import { FC } from "react"
-import { ITask } from "../../../types/task"
+import { ITask } from "@/types/task"
 import { useDrag } from "react-dnd"
-import { defaultTaskColor, taskDnDKey } from "../../../constants/calendar.constants"
+import { defaultTaskColor, taskDnDKey } from "@/constants/calendar.constants"
 
 type DraggableTaskProps = {
   task: ITask

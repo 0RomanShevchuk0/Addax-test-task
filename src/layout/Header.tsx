@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
-import { useUser } from "../hooks/useUser"
-import { appRoutes } from "../configs/routes.config"
+import { useUser } from "@/hooks/useUser"
+import { appRoutes } from "@/configs/routes.config"
 
 export function Header() {
   const { user, isLoading } = useUser()
@@ -14,7 +14,7 @@ export function Header() {
             {user ? (
               <p>{user.email}</p>
             ) : (
-              <Link to={appRoutes.login}>
+              <Link to={appRoutes.auth}>
                 <span className="text-xm">Login</span>
               </Link>
             )}

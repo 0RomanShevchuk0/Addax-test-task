@@ -1,6 +1,6 @@
-import { authTokenService } from "./../services/auth-token.service"
+import { authTokenService } from "@/services/auth-token.service"
 import axios, { type CreateAxiosDefaults } from "axios"
-import { authService } from "../services/auth.service"
+import { authService } from "@/services/auth.service"
 
 const options: CreateAxiosDefaults = {
   baseURL: import.meta.env.VITE_API_URL,

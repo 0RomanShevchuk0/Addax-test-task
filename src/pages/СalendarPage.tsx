@@ -1,13 +1,13 @@
 import moment from "moment"
 import { useState } from "react"
-import { useCalendarPopUp } from "../components/calendar/useCalendarPopUp"
-import { formatDate } from "../utils/date.helpers"
-import { useDebounce } from "../hooks/useDebounce"
-import { useTasks } from "../hooks/useTasks"
-import Input from "../components/ui/Input"
-import TaskPopUp from "../components/calendar/TaskPopUp/TaskPopUp"
-import CalendarBody from "../components/calendar/calendar-body/CalendarBody"
-import CalendarHeader from "../components/calendar/CalendarHeader"
+import { useCalendarPopUp } from "@/components/calendar/useCalendarPopUp"
+import { formatDate } from "@/utils/date.helpers"
+import { useDebounce } from "@/hooks/useDebounce"
+import { useTasks } from "@/hooks/useTasks"
+import Input from "@/components/ui/Input"
+import TaskPopUp from "@/components/calendar/TaskPopUp/TaskPopUp"
+import CalendarBody from "@/components/calendar/calendar-body/CalendarBody"
+import CalendarHeader from "@/components/calendar/CalendarHeader"
 
 const CalendarPage = () => {
   const { selectedTaskId, openTaskPopUp, closeTaskPopup } = useCalendarPopUp()

@@ -13,22 +13,28 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LoginImport } from './routes/login'
+import { Route as SettingsImport } from './routes/settings'
+import { Route as CalendarImport } from './routes/calendar'
 
 // Create Virtual Routes
 
-const CalendarLazyImport = createFileRoute('/calendar')()
+const AuthLazyImport = createFileRoute('/auth')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const CalendarLazyRoute = CalendarLazyImport.update({
-  path: '/calendar',
+const AuthLazyRoute = AuthLazyImport.update({
+  path: '/auth',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/calendar.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
 
-const LoginRoute = LoginImport.update({
-  path: '/login',
+const SettingsRoute = SettingsImport.update({
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CalendarRoute = CalendarImport.update({
+  path: '/calendar',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,18 +54,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
       fullPath: '/calendar'
-      preLoaderRoute: typeof CalendarLazyImport
+      preLoaderRoute: typeof CalendarImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -69,42 +82,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/login': typeof LoginRoute
-  '/calendar': typeof CalendarLazyRoute
+  '/calendar': typeof CalendarRoute
+  '/settings': typeof SettingsRoute
+  '/auth': typeof AuthLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/login': typeof LoginRoute
-  '/calendar': typeof CalendarLazyRoute
+  '/calendar': typeof CalendarRoute
+  '/settings': typeof SettingsRoute
+  '/auth': typeof AuthLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/login': typeof LoginRoute
-  '/calendar': typeof CalendarLazyRoute
+  '/calendar': typeof CalendarRoute
+  '/settings': typeof SettingsRoute
+  '/auth': typeof AuthLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/calendar'
+  fullPaths: '/' | '/calendar' | '/settings' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/calendar'
-  id: '__root__' | '/' | '/login' | '/calendar'
+  to: '/' | '/calendar' | '/settings' | '/auth'
+  id: '__root__' | '/' | '/calendar' | '/settings' | '/auth'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  LoginRoute: typeof LoginRoute
-  CalendarLazyRoute: typeof CalendarLazyRoute
+  CalendarRoute: typeof CalendarRoute
+  SettingsRoute: typeof SettingsRoute
+  AuthLazyRoute: typeof AuthLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  LoginRoute: LoginRoute,
-  CalendarLazyRoute: CalendarLazyRoute,
+  CalendarRoute: CalendarRoute,
+  SettingsRoute: SettingsRoute,
+  AuthLazyRoute: AuthLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -120,18 +138,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/login",
-        "/calendar"
+        "/calendar",
+        "/settings",
+        "/auth"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/login": {
-      "filePath": "login.tsx"
-    },
     "/calendar": {
-      "filePath": "calendar.lazy.tsx"
+      "filePath": "calendar.tsx"
+    },
+    "/settings": {
+      "filePath": "settings.tsx"
+    },
+    "/auth": {
+      "filePath": "auth.lazy.tsx"
     }
   }
 }

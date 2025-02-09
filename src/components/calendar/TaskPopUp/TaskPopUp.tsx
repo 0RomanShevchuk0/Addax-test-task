@@ -1,7 +1,7 @@
 import { FC } from "react"
-import PopUp from "../../ui/PopUp"
-import { useSingleTask } from "../../../hooks/useTasks"
-import { newTaskId } from "../../../constants/calendar.constants"
+import PopUp from "@/components/ui/PopUp"
+import { useSingleTask } from "@/hooks/useTasks"
+import { newTaskId } from "@/constants/calendar.constants"
 import TaskForm from "./TaskForm"
 
 type TaskPopUpProps = {
