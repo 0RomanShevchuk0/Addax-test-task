@@ -12,7 +12,7 @@ export function Header() {
         {!isLoading && (
           <div>
             {user ? (
-              <p>{user.email}</p>
+              <p>{user.name || user.email}</p>
             ) : (
               <Link to={appRoutes.auth}>
                 <span className="text-xm">Login</span>

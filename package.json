@@ -24,7 +24,8 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.54.2"
+    "react-hook-form": "^7.54.2",
+    "react-hot-toast": "^2.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

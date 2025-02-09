@@ -5,10 +5,12 @@ import { IAuthForm } from "@/types/auth"
 import { authService } from "@/services/auth.service"
 import FormField from "@/components/ui/FormField"
 import Button from "@/components/ui/Button"
-import { EMAIL_REGEX } from "@/constants/validation"
+import { EMAIL_PATTERN } from "@/constants/validation"
 import { useNavigate } from "@tanstack/react-router"
 import { appRoutes } from "@/configs/routes.config"
 import { appQueries } from "@/configs/querues.config"
+import { toast } from "react-hot-toast"
+import { STATUS_CODES } from "@/constants/status-codes"
 
 const LoginForm: FC = () => {
   const {
@@ -24,12 +26,17 @@ const LoginForm: FC = () => {
 
   const onSubmit: SubmitHandler<IAuthForm> = (data) => {
     loginMutation.mutate(data, {
-      onSuccess: (response) => {
-        console.log("Login success:", response)
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [appQueries.user] })
+        toast.success("You're logged in successfully!")
         navigate({ to: appRoutes.home })
       },
-      onError: (error) => {
+      onError: (error: any) => {
+        let message = "Incorrect login or password"
+        if (error.status !== STATUS_CODES.NOT_AUTHORIZED_401) {
+          message = "Failed to login"
+        }
+        toast.error(message)
         console.error("Login error:", error)
       },
     })
@@ -42,10 +49,7 @@ const LoginForm: FC = () => {
         type="text"
         register={register("email", {
           required: true,
-          pattern: {
-            value: EMAIL_REGEX,
-            message: "Invalid email format",
-          },
+          pattern: EMAIL_PATTERN,
         })}
         error={errors.email}
       />

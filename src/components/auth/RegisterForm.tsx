@@ -7,10 +7,12 @@ import { useNavigate } from "@tanstack/react-router"
 import { FC } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import FormField from "../ui/FormField"
-import { EMAIL_REGEX } from "@/constants/validation"
+import { EMAIL_PATTERN } from "@/constants/validation"
 import Button from "../ui/Button"
 
-type RegisterFormType = IAuthForm & { confirmPassword: string }
+interface IRegisterForm extends IAuthForm {
+  confirmPassword: string
+}
 
 const RegisterForm: FC = () => {
   const {
@@ -18,13 +20,13 @@ const RegisterForm: FC = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<RegisterFormType>()
+  } = useForm<IRegisterForm>()
 
   const navigate = useNavigate()
   const loginMutation = useMutation({ mutationFn: authService.register })
   const queryClient = useQueryClient()
 
-  const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
+  const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
     if (data.password !== data.confirmPassword) {
       setError("confirmPassword", { message: "Passwords do not match" })
       return
@@ -54,10 +56,7 @@ const RegisterForm: FC = () => {
         type="text"
         register={register("email", {
           required: true,
-          pattern: {
-            value: EMAIL_REGEX,
-            message: "Invalid email format",
-          },
+          pattern: EMAIL_PATTERN,
         })}
         error={errors.email}
       />

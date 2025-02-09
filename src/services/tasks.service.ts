@@ -1,4 +1,4 @@
-import { axiosWithAuth } from "../api/config"
+import { axiosWithAuth } from "../api/interceptors"
 import { PaginationResponse } from "../types/pagination"
 import { ITask, TaskFormStateType, TasksQueryParamsType } from "../types/task"
 

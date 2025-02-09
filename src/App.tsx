@@ -2,6 +2,7 @@ import { FC } from "react"
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
+import { Toaster } from "react-hot-toast"
 
 const basepath = "/"
 
@@ -19,6 +20,7 @@ const App: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster />
     </QueryClientProvider>
   )
 }

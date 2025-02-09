@@ -1,4 +1,4 @@
-import { axiosClassic, axiosWithAuth } from "../api/config"
+import { axiosClassic, axiosWithAuth } from "../api/interceptors"
 import { IAuthResponse, IAuthForm } from "../types/auth"
 import { IUser } from "../types/user"
 import { authTokenService } from "./auth-token.service"
