@@ -8,35 +8,35 @@ type AuthType = "login" | "register"
 
 type VariationItemType = {
   title: string
-  buttonText: string
+  toggleButtonText: string
   form: ReactNode
 }
 
-const variations: Record<AuthType, VariationItemType> = {
+const authFormVariations: Record<AuthType, VariationItemType> = {
   login: {
     title: "Login",
-    buttonText: "Already have an account? Login",
+    toggleButtonText: "Don't have an account? Register",
     form: <LoginForm />,
   },
   register: {
     title: "Register",
-    buttonText: "Don't have an account? Register",
+    toggleButtonText: "Already have an account? Login",
     form: <RegisterForm />,
   },
 }
 
 const AuthPage: FC = () => {
-  const [isLogin, setIsLogin] = useState<boolean>(true)
+  const [isLoginMode, setIsLoginMode] = useState<boolean>(true)
 
-  const type: AuthType = isLogin ? "login" : "register"
-  const { title, form, buttonText } = variations[type]
+  const authType: AuthType = isLoginMode ? "login" : "register"
+  const { title, form, toggleButtonText } = authFormVariations[authType]
 
   return (
     <div className="h-full flex flex-col justify-center items-center gap-2">
       <h1 className="text-3xl mb-2">{title}</h1>
       {form}
-      <Button variant="outline" onClick={() => setIsLogin(!isLogin)}>
-        {buttonText}
+      <Button variant="outline" onClick={() => setIsLoginMode(!isLoginMode)}>
+        {toggleButtonText}
       </Button>
     </div>
   )

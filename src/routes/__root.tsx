@@ -4,7 +4,7 @@ import { Header } from "@/layout/Header"
 
 export const Route = createRootRoute({
   component: () => (
-    <div className="h-screen flex bg-red-400">
+    <div className="h-screen grid grid-cols-[1fr,10fr] bg-red-400">
       <Sidebar />
       <div className="flex flex-col flex-grow overflow-hidden h-full bg-gray-50">
         <Header />
