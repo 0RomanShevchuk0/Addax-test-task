@@ -13,7 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SettingsImport } from './routes/settings'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as CalendarImport } from './routes/calendar'
 
 // Create Virtual Routes
@@ -28,8 +28,8 @@ const AuthLazyRoute = AuthLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
 
-const SettingsRoute = SettingsImport.update({
-  path: '/settings',
+const ProfileRoute = ProfileImport.update({
+  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -61,11 +61,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarImport
       parentRoute: typeof rootRoute
     }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsImport
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
     '/auth': {
@@ -83,14 +83,14 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/calendar': typeof CalendarRoute
-  '/settings': typeof SettingsRoute
+  '/profile': typeof ProfileRoute
   '/auth': typeof AuthLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/calendar': typeof CalendarRoute
-  '/settings': typeof SettingsRoute
+  '/profile': typeof ProfileRoute
   '/auth': typeof AuthLazyRoute
 }
 
@@ -98,30 +98,30 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/calendar': typeof CalendarRoute
-  '/settings': typeof SettingsRoute
+  '/profile': typeof ProfileRoute
   '/auth': typeof AuthLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/settings' | '/auth'
+  fullPaths: '/' | '/calendar' | '/profile' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/settings' | '/auth'
-  id: '__root__' | '/' | '/calendar' | '/settings' | '/auth'
+  to: '/' | '/calendar' | '/profile' | '/auth'
+  id: '__root__' | '/' | '/calendar' | '/profile' | '/auth'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   CalendarRoute: typeof CalendarRoute
-  SettingsRoute: typeof SettingsRoute
+  ProfileRoute: typeof ProfileRoute
   AuthLazyRoute: typeof AuthLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   CalendarRoute: CalendarRoute,
-  SettingsRoute: SettingsRoute,
+  ProfileRoute: ProfileRoute,
   AuthLazyRoute: AuthLazyRoute,
 }
 
@@ -139,7 +139,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/calendar",
-        "/settings",
+        "/profile",
         "/auth"
       ]
     },
@@ -149,8 +149,8 @@ export const routeTree = rootRoute
     "/calendar": {
       "filePath": "calendar.tsx"
     },
-    "/settings": {
-      "filePath": "settings.tsx"
+    "/profile": {
+      "filePath": "profile.tsx"
     },
     "/auth": {
       "filePath": "auth.lazy.tsx"
