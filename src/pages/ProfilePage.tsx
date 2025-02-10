@@ -27,19 +27,23 @@ const EditProfile = () => {
       return
     }
 
-    updateUserMutation.mutate({
-      id: user.id,
-      data: {
-        name: data.name,
-        email: data.email,
+    updateUserMutation.mutate(
+      {
+        id: user.id,
+        data: {
+          name: data.name,
+          email: data.email,
+        },
       },
-    })
-
-    if (updateUserMutation.isSuccess) {
-      toast.success("User successfully updated!")
-    } else {
-      toast.error("Error updating user")
-    }
+      {
+        onSuccess: () => {
+          toast.success("User successfully updated!")
+        },
+        onError: () => {
+          toast.error("Error updating user")
+        },
+      }
+    )
   }
 
   return (
@@ -56,7 +60,7 @@ const EditProfile = () => {
             />
           </div>
           <Button disabled={updateUserMutation.isPending} type="submit" className="w-full">
-            Сохранить
+            Save
           </Button>
         </form>
       </div>
