@@ -30,12 +30,9 @@ class AuthService {
     return response
   }
 
-  logout = async () => {
-    const response = await axiosClassic.post<boolean>(`${this.base}}/logout`)
-
-    if (response.data) authTokenService.removeFromStorage()
-
-    return response
+  logout = () => {
+    authTokenService.removeFromStorage()
+    window.location.reload()
   }
 
   getUserFromToken = async () => {

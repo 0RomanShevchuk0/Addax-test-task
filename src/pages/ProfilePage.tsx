@@ -3,6 +3,7 @@ import FormField from "@/components/ui/FormField"
 import { EMAIL_PATTERN } from "@/constants/validation"
 import { useUser } from "@/hooks/useUser"
 import { useUpdateUser } from "@/hooks/useUserMutation"
+import { authService } from "@/services/auth.service"
 import { IUser } from "@/types/user"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { toast } from "react-hot-toast"
@@ -63,6 +64,7 @@ const EditProfile = () => {
             Save
           </Button>
         </form>
+        <button onClick={authService.logout}>log out</button>
       </div>
     </div>
   )

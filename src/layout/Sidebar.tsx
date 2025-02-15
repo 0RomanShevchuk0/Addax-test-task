@@ -5,7 +5,7 @@ import { appRoutes } from "@/configs/routes.config"
 const links = [
   { path: appRoutes.home, label: "Home" },
   { path: appRoutes.calendar, label: "Calendar" },
-  { path: appRoutes.profile, label: "Settings" },
+  { path: appRoutes.profile, label: "Profile" },
 ]
 
 const Sidebar: FC = () => {
