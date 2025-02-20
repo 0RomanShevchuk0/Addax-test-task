@@ -36,10 +36,10 @@ const TaskForm: FC<TaskFormProps> = ({ task, closePopUp }) => {
     try {
       if (isNewTask) {
         await createTaskMutation.mutateAsync(data)
-        console.log("Task created successfully:", task)
+        console.log("Task created successfully")
       } else {
         await updateTaskMutation.mutateAsync({ id: task.id, task: data })
-        console.log("Task updated successfully:", task)
+        console.log("Task updated successfully")
       }
       closePopUp()
     } catch (err) {
@@ -50,7 +50,7 @@ const TaskForm: FC<TaskFormProps> = ({ task, closePopUp }) => {
   const handleTaskDelete = async (taskId: string) => {
     try {
       await deleteTaskMutation.mutateAsync(taskId)
-      console.log("Task deleted successfully:", taskId)
+      console.log("Task deleted successfully")
       closePopUp()
     } catch (err) {
       console.error("Error deleting task:", err)

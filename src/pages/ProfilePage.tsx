@@ -3,7 +3,6 @@ import FormField from "@/components/ui/FormField"
 import { EMAIL_PATTERN } from "@/constants/validation"
 import { useUser } from "@/hooks/useUser"
 import { useUpdateUser } from "@/hooks/useUserMutation"
-import { authService } from "@/services/auth.service"
 import { IUser } from "@/types/user"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { toast } from "react-hot-toast"
@@ -49,8 +48,8 @@ const EditProfile = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 shadow-lg rounded-2xl">
-      <div>
-        <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
+      <div className="flex flex-col gap-5">
+        <h2 className="text-3xl font-bold mb-4">Edit Profile</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="flex flex-col gap-3">
             <FormField label="Name" type="text" register={register("name")} />
@@ -64,7 +63,6 @@ const EditProfile = () => {
             Save
           </Button>
         </form>
-        <button onClick={authService.logout}>log out</button>
       </div>
     </div>
   )
