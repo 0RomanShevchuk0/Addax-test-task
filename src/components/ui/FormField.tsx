@@ -4,12 +4,13 @@ import { UseFormRegisterReturn, FieldError } from "react-hook-form"
 
 interface FormFieldProps {
   label: string
-  type: "text" | "password" | "email" | "date" | "color"
+  type: "text" | "password" | "email" | "date" | "color" | "file"
   register: UseFormRegisterReturn
   error?: FieldError
+  acceptFileTypes?: string[]
 }
 
-const FormField: FC<FormFieldProps> = ({ label, type, error, register }) => (
+const FormField: FC<FormFieldProps> = ({ label, type, error, register, acceptFileTypes }) => (
   <div className="flex flex-col items-start gap-1">
     <label className="text-gray-700 mb-1">{label}</label>
     <input
@@ -18,6 +19,7 @@ const FormField: FC<FormFieldProps> = ({ label, type, error, register }) => (
         error && "border-red-500"
       )}
       type={type}
+      accept={type === "file" ? acceptFileTypes?.join(", ") : undefined}
       {...register}
     />
     {error && <p className="text-red-500 text-sm">{error.message}</p>}

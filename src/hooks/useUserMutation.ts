@@ -16,3 +16,16 @@ export const useUpdateUser = () => {
     },
   })
 }
+
+export const useUploadUserAvatar = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ file }: { file: File }) => usersService.uploadAvatar(file),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [appQueries.user] })
+    },
+    onError: (error) => {
+      console.error("Error uploading user avatar:", error)
+    },
+  })
+}
