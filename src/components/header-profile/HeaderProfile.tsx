@@ -45,8 +45,8 @@ const HeaderProfile: FC = () => {
         className={clsx(
           "rounded-xl absolute z-50 bg-white t-0 right-0 w-36 p-3 shadow-lg text-left flex flex-col gap-4 duration-200",
           isDropdownOpen
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-3/4 opacity-0 pointer-events-none"
+            ? "translate-y-3/4 opacity-100"
+            : "translate-y-0 opacity-0 pointer-events-none"
         )}
       >
         <Link to={appRoutes.profile}>Profile</Link>

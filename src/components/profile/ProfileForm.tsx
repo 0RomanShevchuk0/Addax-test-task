@@ -51,23 +51,20 @@ const ProfileForm: FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-3xl font-bold mb-4">Edit Profile</h2>
-      <form onSubmit={handleSubmit(updateProfileData)} className="space-y-4">
-        <div className="flex flex-col gap-3">
-          <FormField label="Name" type="text" register={register("name")} error={errors.name} />
-          <FormField
-            label="Email"
-            type="email"
-            register={register("email", { required: true, pattern: EMAIL_PATTERN })}
-            error={errors.email}
-          />
-        </div>
-        <Button disabled={updateUserMutation.isPending} type="submit" className="w-full">
-          Save
-        </Button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(updateProfileData)} className="space-y-4">
+      <div className="flex flex-col gap-3">
+        <FormField label="Name" type="text" register={register("name")} error={errors.name} />
+        <FormField
+          label="Email"
+          type="email"
+          register={register("email", { required: true, pattern: EMAIL_PATTERN })}
+          error={errors.email}
+        />
+      </div>
+      <Button disabled={updateUserMutation.isPending} type="submit" className="w-full">
+        Save
+      </Button>
+    </form>
   )
 }
 

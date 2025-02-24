@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import FormField from "../ui/FormField"
 import { EMAIL_PATTERN } from "@/constants/validation"
 import Button from "../ui/Button"
+import toast from "react-hot-toast"
 
 interface IRegisterForm extends IAuthForm {
   confirmPassword: string
@@ -43,8 +44,12 @@ const RegisterForm: FC = () => {
         queryClient.invalidateQueries({ queryKey: [appQueries.user] })
         navigate({ to: appRoutes.home })
       },
-      onError: (error) => {
-        console.error("Login error:", error)
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message || error?.message || "Something went wrong"
+
+        toast.error(errorMessage)
+        console.error("Login error:", errorMessage)
       },
     })
   }

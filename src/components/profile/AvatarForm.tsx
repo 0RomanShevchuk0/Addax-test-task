@@ -45,26 +45,23 @@ const AvatarForm: FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-3xl font-bold mb-4">Change Profile Photo</h2>
-      <form onSubmit={handleSubmit(updateAvatar)} className="space-y-4">
-        <div className="flex flex-col gap-3">
-          <FormField
-            label="Profile Image"
-            type="file"
-            register={register("fileList", {
-              required: { value: true, message: "File is required" },
-              validate: validateImageFile<AvatarFormType>(),
-            })}
-            acceptFileTypes={["image/jpeg", "image/png", "image/webp"]}
-            error={errors.fileList}
-          />
-        </div>
-        <Button disabled={uploadAvatarMutation.isPending} type="submit" className="w-full">
-          Save
-        </Button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(updateAvatar)} className="space-y-4">
+      <div className="flex flex-col gap-3">
+        <FormField
+          label="Profile Image"
+          type="file"
+          register={register("fileList", {
+            required: { value: true, message: "File is required" },
+            validate: validateImageFile<AvatarFormType>(),
+          })}
+          acceptFileTypes={["image/jpeg", "image/png", "image/webp"]}
+          error={errors.fileList}
+        />
+      </div>
+      <Button disabled={uploadAvatarMutation.isPending} type="submit" className="w-full">
+        Save
+      </Button>
+    </form>
   )
 }
 

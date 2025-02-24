@@ -27,14 +27,19 @@ axiosWithAuth.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    if (error?.response?.status === 401 && error.config && !error.config._isRetry) {
+    if (error.response.status === 401 && originalRequest.url.includes("auth")) {
+      return Promise.reject(error)
+    }
+
+    if (error?.response?.status === 401 && error.config && !originalRequest._isRetry) {
       originalRequest._isRetry = true
       try {
-        await authService.getNewTokens()
+				// refresh token
+        // await authService.getNewTokens()
         return axiosWithAuth.request(originalRequest)
       } catch (error) {
-        // if (errorCatch(error) === "jwt expired")
         authTokenService.removeFromStorage()
+        authService.logout()
       }
     }
 

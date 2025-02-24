@@ -22,13 +22,12 @@ class AuthService {
     return response
   }
 
-  getNewTokens = async () => {
-    const response = await axiosClassic.post<IAuthResponse>(`${this.base}login/access-token`)
+  // getNewTokens = async () => {
+  //   const response = await axiosClassic.post<IAuthResponse>(`${this.base}/access-token`)
+  //   if (response.data.accessToken) authTokenService.saveTokenStorage(response.data.accessToken)
 
-    if (response.data.accessToken) authTokenService.saveTokenStorage(response.data.accessToken)
-
-    return response
-  }
+  //   return response
+  // }
 
   logout = () => {
     authTokenService.removeFromStorage()
