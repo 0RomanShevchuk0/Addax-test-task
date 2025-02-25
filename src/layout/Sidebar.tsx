@@ -25,7 +25,7 @@ const Sidebar: FC = () => {
     <aside className="w-64 h-full bg-[#181818] text-white flex flex-col">
       <div className="p-4">
         <Link to={appRoutes.home} className="text-white hover:text-white">
-          <h2 className="text-xl font-bold">Sidebar</h2>
+          <h2 className="text-xl font-bold">Addax</h2>
         </Link>
       </div>
       <nav className="flex-grow">
