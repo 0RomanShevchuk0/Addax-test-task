@@ -27,7 +27,8 @@ axiosWithAuth.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    if (error.response.status === 401 && originalRequest.url.includes("auth")) {
+    if (error.response.status === 401 && originalRequest.url.includes("access-token")) {
+      console.log("includes auth, throw error!!!")
       return Promise.reject(error)
     }
 
