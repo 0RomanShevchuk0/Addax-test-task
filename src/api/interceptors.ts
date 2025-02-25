@@ -34,10 +34,11 @@ axiosWithAuth.interceptors.response.use(
     if (error?.response?.status === 401 && error.config && !originalRequest._isRetry) {
       originalRequest._isRetry = true
       try {
-				// refresh token
-        // await authService.getNewTokens()
+        console.log("refresh tokens")
+        await authService.getNewTokens()
         return axiosWithAuth.request(originalRequest)
       } catch (error) {
+        console.log("removeFromStorage and logout")
         authTokenService.removeFromStorage()
         authService.logout()
       }
