@@ -22,14 +22,15 @@ class AuthService {
     return response
   }
 
-  // getNewTokens = async () => {
-  //   const response = await axiosClassic.post<IAuthResponse>(`${this.base}/access-token`)
-  //   if (response.data.accessToken) authTokenService.saveTokenStorage(response.data.accessToken)
+  getNewTokens = async () => {
+    const response = await axiosClassic.get<IAuthResponse>(`${this.base}/access-token`)
+    if (response.data.accessToken) authTokenService.saveTokenStorage(response.data.accessToken)
 
-  //   return response
-  // }
+    return response
+  }
 
-  logout = () => {
+  logout = async () => {
+    await axiosWithAuth.post(`${this.base}/logout`)
     authTokenService.removeFromStorage()
     window.location.reload()
   }

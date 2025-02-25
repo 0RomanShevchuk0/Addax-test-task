@@ -39,8 +39,7 @@ const RegisterForm: FC = () => {
     }
 
     loginMutation.mutate(submitData, {
-      onSuccess: (response) => {
-        console.log("Register success:", response)
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [appQueries.user] })
         navigate({ to: appRoutes.home })
       },

@@ -59,7 +59,7 @@ const AvatarForm: FC = () => {
         />
       </div>
       <Button disabled={uploadAvatarMutation.isPending} type="submit" className="w-full">
-        Save
+        Save Photo
       </Button>
     </form>
   )
