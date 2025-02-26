@@ -27,25 +27,22 @@ axiosWithAuth.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    console.log(" originalRequest.url:", originalRequest.url)
     if (
       (error.response.status === 401 && originalRequest.url.includes("access-token")) ||
       originalRequest.url.includes("logout")
     ) {
-      console.log("includes access-token or logout, throw error!!!")
       return Promise.reject(error)
     }
 
     if (error?.response?.status === 401 && error.config && !error.config._isRetry) {
       originalRequest._isRetry = true
       try {
-        console.log("refresh tokens")
         await authService.getNewTokens()
         return axiosWithAuth.request(originalRequest)
       } catch (error) {
-        console.log("removeFromStorage and logout")
-        await authService.logout()
-        authTokenService.removeFromStorage()
+        await authService.logout().finally(() => {
+          authTokenService.removeFromStorage()
+        })
       }
     }
 
