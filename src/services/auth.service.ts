@@ -32,7 +32,7 @@ class AuthService {
   logout = async () => {
     await axiosWithAuth.post(`${this.base}/logout`).finally(() => {
       authTokenService.removeFromStorage()
-      window.location.reload()
+      // window.location.reload()
     })
   }
 
