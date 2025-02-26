@@ -40,9 +40,7 @@ axiosWithAuth.interceptors.response.use(
         await authService.getNewTokens()
         return axiosWithAuth.request(originalRequest)
       } catch (error) {
-        await authService.logout().finally(() => {
-          authTokenService.removeFromStorage()
-        })
+        await authService.logout()
       }
     }
 
