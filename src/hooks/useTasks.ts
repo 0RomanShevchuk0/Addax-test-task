@@ -21,6 +21,7 @@ export function useSingleTask(taskId: string, enabled: boolean) {
     queryKey: [taskId],
     queryFn: () => taskService.getTaskById(taskId),
     enabled: enabled,
+		retry: false
   })
   return { data: data?.data, isLoading, error }
 }

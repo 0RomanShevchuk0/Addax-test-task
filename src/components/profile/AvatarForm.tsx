@@ -11,7 +11,11 @@ type AvatarFormType = {
   fileList: FileList | null
 }
 
-const AvatarForm: FC = () => {
+type AvatarFormPropsType = {
+  onSuccess: () => void
+}
+
+const AvatarForm: FC<AvatarFormPropsType> = ({ onSuccess }) => {
   const { user } = useUser()
 
   const {
@@ -36,6 +40,7 @@ const AvatarForm: FC = () => {
       {
         onSuccess: () => {
           toast.success("Profile Image successfully uploaded!")
+          onSuccess()
         },
         onError: () => {
           toast.error("Error uploading profile image")

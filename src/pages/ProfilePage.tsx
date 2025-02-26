@@ -19,7 +19,7 @@ const EditProfile = () => {
       </div>
       <div className="flex flex-col gap-10">
         {isProfileIditing ? (
-          <AvatarForm />
+          <AvatarForm onSuccess={() => setIsProfileIditing(false)} />
         ) : (
           <img
             className="aspect-square object-cover rounded-md"
