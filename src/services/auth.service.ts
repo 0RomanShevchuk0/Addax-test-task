@@ -1,3 +1,4 @@
+import { appRoutes } from "@/configs/routes.config"
 import { axiosClassic, axiosWithAuth } from "../api/interceptors"
 import { IAuthResponse, IAuthForm } from "../types/auth"
 import { IUser } from "../types/user"
@@ -32,7 +33,7 @@ class AuthService {
   logout = async () => {
     await axiosWithAuth.post(`${this.base}/logout`).finally(() => {
       authTokenService.removeFromStorage()
-      // window.location.reload()
+      window.location.href = appRoutes.auth
     })
   }
 
