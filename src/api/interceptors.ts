@@ -1,6 +1,7 @@
 import { authTokenService } from "@/services/auth-token.service"
 import axios, { type CreateAxiosDefaults } from "axios"
 import { authService } from "@/services/auth.service"
+import { errorCatch } from "./errorCatch"
 
 const options: CreateAxiosDefaults = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -27,20 +28,21 @@ axiosWithAuth.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
+    const errorMessage = errorCatch(error)
     if (
-      (error.response.status === 401 && originalRequest.url.includes("access-token")) ||
-      originalRequest.url.includes("logout")
+      ((error?.response?.status === 401 && errorMessage.includes("expired jwt")) ||
+        errorCatch(error) === "jwt must be provided") &&
+      error.config &&
+      !error.config._isRetry
     ) {
-      return Promise.reject(error)
-    }
-
-    if (error?.response?.status === 401 && error.config && !error.config._isRetry) {
       originalRequest._isRetry = true
       try {
         await authService.getNewTokens()
         return axiosWithAuth.request(originalRequest)
       } catch (error) {
-        await authService.logout()
+        if (errorCatch(error) === "Refresh token expired") {
+          await authService.logout()
+        }
       }
     }
 

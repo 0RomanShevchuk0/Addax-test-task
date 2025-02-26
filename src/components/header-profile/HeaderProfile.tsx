@@ -48,6 +48,7 @@ const HeaderProfile: FC = () => {
             ? "translate-y-3/4 opacity-100"
             : "translate-y-0 opacity-0 pointer-events-none"
         )}
+				onClick={() => setIsDropdownOpen(false)}
       >
         <Link to={appRoutes.profile}>Profile</Link>
         <Button className="w-full text-sm" variant="danger" onClick={authService.logout}>
