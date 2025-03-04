@@ -1,11 +1,8 @@
 import moment from "moment"
 
 export const getMonthDays = (currentDate: string) => {
-  const startOfMonth = moment(currentDate).startOf("month")
-  const endOfMonth = moment(currentDate).endOf("month")
-
-  const startOfGrid = startOfMonth.clone().startOf("week")
-  const endOfGrid = endOfMonth.clone().endOf("week")
+  const startOfGrid = moment(currentDate).startOf("month").startOf("isoWeek")
+  const endOfGrid = moment(currentDate).endOf("month").endOf("isoWeek")
 
   const days: moment.Moment[] = []
   let currentDay = startOfGrid.clone()

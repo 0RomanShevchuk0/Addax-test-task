@@ -10,6 +10,7 @@ import FormField from "../ui/FormField"
 import { EMAIL_PATTERN } from "@/constants/validation"
 import Button from "../ui/Button"
 import toast from "react-hot-toast"
+import { errorCatch } from "@/api/errorCatch"
 
 interface IRegisterForm extends IAuthForm {
   confirmPassword: string
@@ -44,8 +45,7 @@ const RegisterForm: FC = () => {
         navigate({ to: appRoutes.home })
       },
       onError: (error: any) => {
-        const errorMessage =
-          error?.response?.data?.message || error?.message || "Something went wrong"
+        const errorMessage = errorCatch(error) || "Something went wrong"
 
         toast.error(errorMessage)
         console.error("Login error:", errorMessage)

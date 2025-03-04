@@ -1,7 +1,7 @@
 import { FC } from "react"
 import PopUp from "@/components/ui/PopUp"
 import { useSingleTask } from "@/hooks/useTasks"
-import { newTaskId } from "@/constants/calendar.constants"
+import { NEW_TASK_ID } from "@/constants/calendar.constants"
 import TaskForm from "./TaskForm"
 
 type TaskPopUpProps = {
@@ -10,7 +10,7 @@ type TaskPopUpProps = {
 }
 
 const TaskPopUp: FC<TaskPopUpProps> = ({ taskId, closePopUp }) => {
-  const isNewTask = taskId === newTaskId
+  const isNewTask = taskId === NEW_TASK_ID
   const { data: task, isLoading, error } = useSingleTask(taskId, !isNewTask)
 
   const renderLoading = <div className="text-center py-4">Loading...</div>

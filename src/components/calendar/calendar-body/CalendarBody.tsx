@@ -9,6 +9,7 @@ import { HTML5Backend } from "react-dnd-html5-backend"
 import { DndProvider } from "react-dnd"
 import { useUpdateTask } from "@/hooks/useTaskMutations"
 import { useHolidays } from "@/hooks/useHolidays"
+import { WEEK_DAY_NAMES } from "@/constants/calendar.constants"
 
 type CalendarProps = {
   currentDate: string
@@ -23,7 +24,6 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
     setLocalTasks(tasks)
   }, [tasks])
 
-  const weekDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   const monthDays = getMonthDays(currentDate)
 
   const { holidays, isLoading } = useHolidays()
@@ -41,8 +41,8 @@ const CalendarBody: FC<CalendarProps> = ({ currentDate, tasks, openTaskPopUp }) 
     }
   }
 
-  const WeekdayHeaderCells = weekDayNames.map((day, index) => {
-    const isLastCol = index === weekDayNames.length - 1
+  const WeekdayHeaderCells = WEEK_DAY_NAMES.map((day, index) => {
+    const isLastCol = index === WEEK_DAY_NAMES.length - 1
     return <WeekDayHeader key={day} day={day} isLastCol={isLastCol} />
   })
 

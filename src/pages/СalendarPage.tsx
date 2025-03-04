@@ -17,8 +17,8 @@ const CalendarPage = () => {
   const debouncedSearch = useDebounce(search, 700)
 
   const { tasks, isLoading, error } = useTasks({
-    startDate: currentDate,
-    endDate: formatDate(moment(currentDate).endOf("month")),
+    startDate: formatDate(moment(currentDate).startOf("isoWeek")),
+    endDate: formatDate(moment(currentDate).endOf("month").endOf("isoWeek")),
     name: debouncedSearch,
   })
 
