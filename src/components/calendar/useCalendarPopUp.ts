@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { newTaskId } from "@/constants/calendar.constants"
+import { NEW_TASK_ID } from "@/constants/calendar.constants"
 
 export type useCalendarPopUpReturnType = {
   selectedTaskId: string | null
@@ -11,7 +11,7 @@ export const useCalendarPopUp = (): useCalendarPopUpReturnType => {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 
   const openTaskPopUp = (id: string | null) => {
-    setSelectedTaskId(id || newTaskId)
+    setSelectedTaskId(id || NEW_TASK_ID)
   }
 
   const closeTaskPopup = () => {

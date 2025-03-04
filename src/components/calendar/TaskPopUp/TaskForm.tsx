@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { ITask, TaskFormStateType } from "@/types/task"
 import moment from "moment"
 import { useCreateTask, useUpdateTask, useDeleteTask } from "@/hooks/useTaskMutations"
-import { defaultTaskColor } from "@/constants/calendar.constants"
+import { DEFAULT_TASK_COLOR } from "@/constants/calendar.constants"
 
 type TaskFormProps = {
   task?: ITask
@@ -19,7 +19,7 @@ const TaskForm: FC<TaskFormProps> = ({ task, closePopUp }) => {
     name: task?.name || "",
     notes: task?.notes || "",
     date: task?.date || moment(new Date()).format("YYYY-MM-DD"),
-    color: task?.color || defaultTaskColor,
+    color: task?.color || DEFAULT_TASK_COLOR,
   }
 
   const {

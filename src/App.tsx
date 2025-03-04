@@ -7,7 +7,6 @@ import { Toaster } from "react-hot-toast"
 const basepath = "/"
 
 const router = createRouter({ routeTree, basepath })
-
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router
